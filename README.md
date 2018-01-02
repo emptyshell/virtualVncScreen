@@ -9,7 +9,7 @@ in case of disconnection from the vnc server don't run the script again just ALT
 and run the commnad: 
 
 gksu x11vnc -clip xinerama1  #when u don't have any HDMI monitor.
-\n
+or
 gksu x11vnc -clip xinerama2 #when HDMI monitor is connected.
 
 And i'm using xtightvncviewer to connect to x11vnc server (with virtual monitor)
