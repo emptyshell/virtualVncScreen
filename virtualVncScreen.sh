@@ -12,6 +12,8 @@
 #hdmi status in case if hdmi connected (make sure to choose the right card)
 HDMI_STATUS="$(cat /sys/class/drm/card1-HDMI-A-1/status)"
 
+
+
 #creating the virtual screen with size 1440x900(in my case, u can change the size to your screen)
 function initVirtualSamsungMonitor {
 	gtf 1440 900 60
@@ -21,11 +23,17 @@ function initVirtualSamsungMonitor {
 }
 echo "Initializating the virtual monitor"
 initVirtualSamsungMonitor
+	HDMI_STATUS="$(cat /sys/class/drm/card1-HDMI-A-1/status)"
+	if ps aux | grep x11vnc | grep -v grep | grep -v terminator ; then
+  		VNC_STATUS="running"
+	else
+   		VNC_STATUS="notrunning"
+	fi
 
-if [[ "${HDMI_STATUS}" = connected ]]; then
-	echo "HDMI connected"
-	x11vnc -clip xinerama2 -loop
-else
-	echo "HDMI disconected"
-	x11vnc -clip xinerama1 -loop
-fi
+	if [ ["${HDMI_STATUS}" = "connected"] ]; then
+		echo "HDMI connected"
+		x11vnc -clip xinerama2 -loop
+	else
+		echo "HDMI disconected"
+		x11vnc -clip xinerama1 -loop 
+	fi
