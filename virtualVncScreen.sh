@@ -24,8 +24,8 @@ initVirtualSamsungMonitor
 
 if [[ "${HDMI_STATUS}" = connected ]]; then
 	echo "HDMI connected"
-	x11vnc -clip xinerama2
+	x11vnc -clip xinerama2 -loop
 else
 	echo "HDMI disconected"
-	x11vnc -clip xinerama1
+	x11vnc -clip xinerama1 -loop
 fi
