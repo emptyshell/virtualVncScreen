@@ -11,7 +11,7 @@
 
 #hdmi status in case if hdmi connected (make sure to choose the right card)
 HDMI_STATUS="$(cat /sys/class/drm/card1-HDMI-A-1/status)"
-
+OLD_SCREEN_POSITION=1920x1080+1920+180
 
 
 #creating the virtual screen with size 1440x900(in my case, u can change the size to your screen)
@@ -21,19 +21,37 @@ function initVirtualSamsungMonitor {
 	xrandr --addmode VIRTUAL1 1440x900_60.00
 	xrandr --output VIRTUAL1 --mode 1440x900_60.00 --right-of eDP1
 }
+
+function compare {
+	if [[ "${SCREEN_POSITION}" != "${OLD_SCREEN_POSITION}" ]]; then
+  				x11vnc -R stop
+  			fi
+}
 echo "Initializating the virtual monitor"
 initVirtualSamsungMonitor
-	HDMI_STATUS="$(cat /sys/class/drm/card1-HDMI-A-1/status)"
-	if ps aux | grep x11vnc | grep -v grep | grep -v terminator ; then
-  		VNC_STATUS="running"
-	else
-   		VNC_STATUS="notrunning"
-	fi
+	
+	
+	
+	while [[ 0=0 ]]; do
+		HDMI_STATUS="$(cat /sys/class/drm/card1-HDMI-A-1/status)"
+		if [[ "${HDMI_STATUS}" = connected ]]; then 
+			echo "HDMI connected"
+			SCREEN_POSITION=1920x1080+1920+1260
+		else
+			echo "HDMI disconected"
+			SCREEN_POSITION=1920x1080+1920+180
+		fi
 
-	if [ ["${HDMI_STATUS}" = "connected"] ]; then
-		echo "HDMI connected"
-		x11vnc -clip xinerama2 -loop
-	else
-		echo "HDMI disconected"
-		x11vnc -clip xinerama1 -loop 
-	fi
+		if ps aux | grep x11vnc | grep -v grep | grep -v terminator ; then
+  			VNC_STATUS="running"
+  			compare
+  			
+		else
+   			VNC_STATUS="notrunning"
+   			x11vnc -auth /var/lib/sddm/*  -viewonly -allow 192.168.0.12 -clip "${SCREEN_POSITION}" -bg
+		fi
+		OLD_SCREEN_POSITION="${SCREEN_POSITION}"
+	done
+	
+
+	
