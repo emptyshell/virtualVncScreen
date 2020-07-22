@@ -33,7 +33,7 @@ initVirtualSamsungMonitor
 	
 	
 	while [[ 0=0 ]]; do
-		HDMI_STATUS="$(cat /sys/class/drm/card1-HDMI-A-1/status)"
+		HDMI_STATUS="$(cat /sys/class/drm/card0-HDMI-A-1/status)"
 		if [[ "${HDMI_STATUS}" = connected ]]; then 
 			echo "HDMI connected"
 		else
