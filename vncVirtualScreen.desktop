@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=/etc/virtualVncScreen.sh
+Hidden=false
+X-GNOME-Autostart-enabled=true
+Name=VirtualVncScreen
+Comment=Virtual Vnc Screen
