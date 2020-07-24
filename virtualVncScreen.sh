@@ -28,7 +28,7 @@ while [[ $VNC_SERVER=1 ]]; do
 		else
 			xrandr --output VIRTUAL1 --mode 1440x900_60.00 --pos 0x540 --output HDMI1 --pos 1440x0
 			echo "vnc not running"
-			x11vnc -auth /var/lib/gdm/:0.Xauth -viewonly -clip xinerama0 -bg -noxdamage -modtweak
+			x11vnc -auth /var/lib/sddm/* -viewonly -clip xinerama0 -bg -noxdamage -modtweak
 		fi
 	else
 		echo "HDMI disconnected"
