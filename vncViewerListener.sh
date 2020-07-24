@@ -15,13 +15,20 @@ while getopts ":h" option; do
       h) # display Help
          Help
          exit;;
+	  help) # display Help
+	     Help
+         exit;;
      \?) # incorrect option
          echo "Error: Invalid option"
          exit;;
    esac
 done
 
-while true; do	
+while true; do
+	if [[ -z "$1"]]; then
+		Help
+         exit;;
+	fi	
 	if ps aux | grep vncviewer | grep -v grep | grep -v terminator ; then
   		VNC_STATUS="running"
 	else
