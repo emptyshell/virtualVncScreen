@@ -25,9 +25,9 @@ while getopts ":h" option; do
 done
 
 while true; do
-	if [[ -z "$1"]]; then
+	if [[ -z "$1" ]]; then
 		Help
-         exit;;
+        break
 	fi	
 	if ps aux | grep vncviewer | grep -v grep | grep -v terminator ; then
   		VNC_STATUS="running"
@@ -35,4 +35,5 @@ while true; do
    		VNC_STATUS="notrunning"
 		vncviewer $1:5900 -fullscreen -encodings "tight copyrect"
 	fi
+	sleep 15s
 done 
