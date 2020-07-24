@@ -1,17 +1,13 @@
 #!/bin/bash
-### BEGIN INIT INFO
-# Provides:          virtualVncScreen
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
+### BEGIN INFO
 # Short-Description: Creating VNC virtual screen.
 # Description:       Creating virtual x11vnc server to a virtual monitor that can be connected with a remote viewer(monitor)
-### END INIT INFO
+### END INFO
 
 #hdmi status in case if hdmi connected (make sure to choose the right card)
 HDMI_STATUS="$(cat /sys/class/drm/card0-HDMI-A-1/status)"
 TRIGER=0
+VNC_SERVER=1
 
 #creating the virtual screen with size 1440x900(in my case, u can change the size to your screen)
 function initVirtualSamsungMonitor {
@@ -20,8 +16,6 @@ function initVirtualSamsungMonitor {
 	xrandr --addmode VIRTUAL1 1440x900_60.00
 	if [[ $HDMI_STATUS = connected ]]; then 
 		xrandr --output VIRTUAL1 --mode 1440x900_60.00 --pos 0x540 --output HDMI1 --pos 1440x0
-	else
-		xrandr --output VIRTUAL1 --mode 1440x900_60.00 --pos 0x180 --output eDP1 --pos 1440x0
 	fi
 	xrandr --verbose
 }
@@ -36,22 +30,20 @@ function compare {
 	fi
 	
 }
+
 echo "Initializating the virtual monitor"
 initVirtualSamsungMonitor
 	
 	
 	
-	while [[ 0=0 ]]; do
+	while [[ $VNC_SERVER=1 ]]; do
 		if ps aux | grep x11vnc | grep -v grep | grep -v terminator ; then
   			VNC_STATUS="running"
   			compare
 		else
    			VNC_STATUS="notrunning"
-   			x11vnc -auth /var/lib/gdm/:0.Xauth -viewonly -clip xinerama0 -bg
+   			x11vnc -auth /var/lib/gdm/:0.Xauth -viewonly -clip xinerama0 -bg -xkb -noxrecord -noxfixes -noxdamage -modtweak
 			TRIGER=5m
 		fi
 		sleep $TRIGER
 	done
-	
-
-	
