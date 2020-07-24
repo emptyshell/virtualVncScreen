@@ -26,12 +26,14 @@ while [[ $VNC_SERVER=1 ]]; do
 		if ps aux | grep x11vnc | grep -v grep | grep -v terminator ; then
 			echo "vnc running"
 		else
+			xrandr --output VIRTUAL1 --mode 1440x900_60.00 --pos 0x540 --output HDMI1 --pos 1440x0
 			echo "vnc not running"
-			x11vnc -auth /var/lib/gdm/:0.Xauth -viewonly -clip xinerama0 -bg -xkb -noxrecord -noxfixes -noxdamage -modtweak
+			x11vnc -auth /var/lib/gdm/:0.Xauth -viewonly -clip xinerama0 -bg -noxdamage -modtweak
 		fi
 	else
 		echo "HDMI disconnected"
 		x11vnc -R stop
+		xrandr --output VIRTUAL1 --off
 	fi
 	sleep 15s
 done
