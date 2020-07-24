@@ -1,7 +1,7 @@
 # VirtualVncScreen
 Create a remote monitor via VNC (x11vnc)
 
-This scriipt is an automatization of an virtual vnc connected monitor.
+This script is an automatization of an virtual vnc connected monitor.
 
 Use scenario:
 * Use other device monitor as your main machine monitor
@@ -9,7 +9,7 @@ Use scenario:
 
 #### My use case:
 
-I have a Raspberry pi (Rpi) with a monitor connected to it and my laptop and an hdmi monitor connected to it, on my laptop I run ``virtualVncScreen.sh`` this is the vnc server connected to virtual monitor created via `xrandr`. And on my Rpi, I run `vncViewerListener.sh` and pass as argument the ip I want to listen. I also added to autostart those scripts, so when machines reboots both still runniing propperly.
+I have a Raspberry pi (Rpi) with a monitor connected to it and my laptop and an hdmi monitor connected to it, on my laptop I run ``virtualVncScreen.sh`` this is the vnc server connected to virtual monitor created via `xrandr`. And on my Rpi, I run `vncViewerListener.sh` and pass as argument the ip I want to listen. I also added to autostart those scripts, so when machines reboots both still running properly.
 
 ### Install and config
 ___
@@ -68,7 +68,7 @@ VIRTUAL2 disconnected (normal left inverted right x axis y axis)
 
 2) Some changes may bee required to `virtualVncScreen.sh`, you may need to modify the screen resolution in my case is 1440x900 wiith 60 refresh rate.
 ```bash
-function initVirtualSamsungMonitor {
+function initVirtualMonitor {
 	gtf 1440 900 60
 	xrandr --newmode "1440x900_60.00"  104.58  1440 1520 1672 1904  900 901 904 931  -HSync +Vsync
 	xrandr --addmode VIRTUAL1 1440x900_60.00

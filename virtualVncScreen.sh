@@ -7,7 +7,7 @@
 VNC_SERVER=1
 
 #creating the virtual screen with size 1440x900(in my case, u can change the size to your screen)
-function initVirtualSamsungMonitor {
+function initVirtualMonitor {
 	gtf 1440 900 60
 	xrandr --newmode "1440x900_60.00"  104.58  1440 1520 1672 1904  900 901 904 931  -HSync +Vsync
 	xrandr --addmode VIRTUAL1 1440x900_60.00
@@ -16,7 +16,7 @@ function initVirtualSamsungMonitor {
 }
 
 echo "Initializating the virtual monitor"
-initVirtualSamsungMonitor
+initVirtualMonitor
 	
 while [[ $VNC_SERVER=1 ]]; do
 	#hdmi status in case if hdmi connected (make sure to choose the right card)
